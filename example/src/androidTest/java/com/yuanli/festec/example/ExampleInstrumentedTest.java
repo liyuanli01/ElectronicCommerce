@@ -1,5 +1,6 @@
 package com.yuanli.festec.example;
 
+
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
@@ -18,7 +19,7 @@ import static org.junit.Assert.*;
 public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() throws Exception {
-        // Context of the app under test.
+        // Context of the com.yuanli.latte.app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.yuanli.festec.example", appContext.getPackageName());
