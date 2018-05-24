@@ -20,8 +20,10 @@ public class Latte {
         return Configurator.getInstance();
     }
 
-    private static WeakHashMap<String,Object> getConfigutations(){
+    public static WeakHashMap<String,Object> getConfigutations(){
         return Configurator.getInstance().getLatteConfigs();
     }
+
+
 
 }
