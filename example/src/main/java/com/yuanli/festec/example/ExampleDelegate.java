@@ -2,7 +2,6 @@ package com.yuanli.festec.example;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,7 +22,6 @@ public class ExampleDelegate extends LatteDelegate {
 
     @Override
     public Object setLayout() {
-        Log.i("TAG", "setLayout: come");
         return R.layout.delegate_example;
     }
 

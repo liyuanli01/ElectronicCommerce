@@ -8,6 +8,7 @@ import com.yuanli.latte.net.callBack.IRequest;
 import com.yuanli.latte.net.callBack.ISuccess;
 import com.yuanli.latte.ui.LoaderStyle;
 
+import java.io.File;
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -30,6 +31,7 @@ public class RestClientBuilder {
     private IError mIError = null;
     private IFailure mIFailure = null;
     private RequestBody mBody = null;
+    private File mfile;
     private Context mContext = null;
     private LoaderStyle mLoadStyle = null;
 
@@ -53,6 +55,16 @@ public class RestClientBuilder {
 
     public final RestClientBuilder params(String key, Object value) {
         PARAMS.put(key, value);
+        return this;
+    }
+
+    public final RestClientBuilder file(File file) {
+        this.mfile = file;
+        return this;
+    }
+
+    public final RestClientBuilder file(String file) {
+        this.mfile = new File(file);
         return this;
     }
 
@@ -103,6 +115,6 @@ public class RestClientBuilder {
      * @return
      */
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIError, mIFailure, mBody, mContext, mLoadStyle);
+        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIError, mIFailure, mBody, mfile, mContext, mLoadStyle);
     }
 }
