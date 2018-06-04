@@ -1,6 +1,7 @@
 package com.yuanli.latte.app;
 
 import android.content.Context;
+import android.os.Handler;
 
 import java.util.WeakHashMap;
 
@@ -16,7 +17,9 @@ public class Latte {
 
     //把对象的引用转入到了配置项目
     public static Configurator init(Context context){
-        getConfigutations().put(ConfigType.APPLICATION_CONTEXT.name(),context.getApplicationContext());
+        getConfigutations()
+                .put(ConfigType.APPLICATION_CONTEXT.name(),
+                        context.getApplicationContext());
         return Configurator.getInstance();
     }
 
@@ -24,6 +27,23 @@ public class Latte {
         return Configurator.getInstance().getLatteConfigs();
     }
 
+    public static Configurator getConfigurator() {
+        return Configurator.getInstance();
+    }
 
+    public static <T> T getConfiguration(Object key) {
+        return getConfigurator().getConfiguration((Enum<ConfigType>) key);
+    }
+
+    public static Context getApplicationContext() {
+        return getConfiguration(ConfigKeys.APPLICATION_CONTEXT);
+    }
+
+    public static Handler getHandler() {
+        return getConfiguration(ConfigKeys.HANDLER);
+    }
+
+    public static void test(){
+    }
 
 }

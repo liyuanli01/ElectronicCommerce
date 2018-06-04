@@ -1,9 +1,12 @@
 package com.yuanli.latte.net;
 
+import android.content.Context;
+
 import com.yuanli.latte.net.callBack.IError;
 import com.yuanli.latte.net.callBack.IFailure;
 import com.yuanli.latte.net.callBack.IRequest;
 import com.yuanli.latte.net.callBack.ISuccess;
+import com.yuanli.latte.ui.LoaderStyle;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -14,19 +17,21 @@ import okhttp3.RequestBody;
 /**
  * ElectronicCommerce
  * builder模式建造者
+ *
  * @author liyuanli
  * @data 2018/5/21
  */
 
 public class RestClientBuilder {
-
-    private String mUrl;
+    private String mUrl = null;
     private static final Map<String, Object> PARAMS = RestCreator.getParams();
-    private IRequest mIRequest;
-    private ISuccess mISuccess;
-    private IError mIError;
-    private IFailure mIFailure;
-    private RequestBody mBody;
+    private IRequest mIRequest = null;
+    private ISuccess mISuccess = null;
+    private IError mIError = null;
+    private IFailure mIFailure = null;
+    private RequestBody mBody = null;
+    private Context mContext = null;
+    private LoaderStyle mLoadStyle = null;
 
     /**
      * 不允许外部类来用它
@@ -76,6 +81,19 @@ public class RestClientBuilder {
         return this;
     }
 
+    public final RestClientBuilder loader(Context context, LoaderStyle loaderStyle) {
+        this.mContext = context;
+        this.mLoadStyle = loaderStyle;
+        return this;
+    }
+
+    public final RestClientBuilder loader(Context context) {
+        this.mContext = context;
+        this.mLoadStyle = LoaderStyle.BallClipRotatePulseIndicator;
+        //        this.mLoadStyle = LoaderStyle.BallSpinFadeLoaderIndicator;
+        return this;
+    }
+
     /**
      * RestClient不是直接new出来的，对其构造器进行了处理使其可访问的范围尽可能小，
      * 只让它通过builder来构建自己。
@@ -84,7 +102,7 @@ public class RestClientBuilder {
      *
      * @return
      */
-    public final RestClient build(){
-        return new RestClient(mUrl,PARAMS,mIRequest,mISuccess,mIError,mIFailure,mBody);
+    public final RestClient build() {
+        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIError, mIFailure, mBody, mContext, mLoadStyle);
     }
 }

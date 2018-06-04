@@ -1,10 +1,14 @@
 package com.yuanli.latte.net;
 
+import android.content.Context;
+
 import com.yuanli.latte.net.callBack.IError;
 import com.yuanli.latte.net.callBack.IFailure;
 import com.yuanli.latte.net.callBack.IRequest;
 import com.yuanli.latte.net.callBack.ISuccess;
 import com.yuanli.latte.net.callBack.RequestCallbacks;
+import com.yuanli.latte.ui.LatteLoader;
+import com.yuanli.latte.ui.LoaderStyle;
 
 import java.util.Map;
 
@@ -23,7 +27,7 @@ import retrofit2.Callback;
 
 public class RestClient {
 
-    /* 这里的参数一次构建完毕，决不允许更改  用final */
+    /* builder模式宿主 这里的参数一次构建完毕，决不允许更改  用final */
     private final String URL;
     private static final Map<String, Object> PARAMS = RestCreator.getParams();
     private final IRequest REQUEST;
@@ -31,6 +35,8 @@ public class RestClient {
     private final IError ERROR;
     private final IFailure FAILFURE;
     private final RequestBody BODY;
+    private final LoaderStyle LOADER_STYLE;
+    private final Context CONTEXT;
 
     public RestClient(String url,
                       Map<String, Object> params,
@@ -38,7 +44,9 @@ public class RestClient {
                       ISuccess success,
                       IError error,
                       IFailure failfure,
-                      RequestBody body) {
+                      RequestBody body,
+                      Context context,
+                      LoaderStyle loaderStyle) {
         URL = url;
         PARAMS.putAll(params);
         REQUEST = request;
@@ -46,6 +54,8 @@ public class RestClient {
         ERROR = error;
         FAILFURE = failfure;
         BODY = body;
+        this.CONTEXT=context;
+        this.LOADER_STYLE=loaderStyle;
     }
 
     public static RestClientBuilder builder() {
@@ -58,6 +68,10 @@ public class RestClient {
 
         if (REQUEST != null) {
             REQUEST.onRequestStart();
+        }
+
+        if (LOADER_STYLE!=null){
+            LatteLoader.showLoading(CONTEXT,LOADER_STYLE);
         }
 
         switch (method) {
@@ -87,14 +101,14 @@ public class RestClient {
                 REQUEST,
                 SUCCESS,
                 ERROR,
-                FAILFURE
+                FAILFURE,
+                LOADER_STYLE
         );
     }
 
     public final void get(){
         request(HttpMethod.GET);
     }
-
     public final void post(){
         request(HttpMethod.POST);
     }

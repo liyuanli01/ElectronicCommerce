@@ -24,11 +24,11 @@ public class RestCreator {
      * 为了避免频繁的创建PARAMS
      * 饿汉模式
      */
-    private static final class ParamsHolder{
+    private static final class ParamsHolder {
         public static final WeakHashMap<String, Object> PARAMS = new WeakHashMap<>();
     }
 
-    public static WeakHashMap<String,Object> getParams(){
+    public static WeakHashMap<String, Object> getParams() {
         return ParamsHolder.PARAMS;
     }
 
