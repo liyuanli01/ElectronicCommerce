@@ -18,6 +18,7 @@ import okhttp3.RequestBody;
 /**
  * ElectronicCommerce
  * builder模式建造者
+ * 加入RestClient中的参数并写上对应的方法
  *
  * @author liyuanli
  * @data 2018/5/21
@@ -26,14 +27,20 @@ import okhttp3.RequestBody;
 public class RestClientBuilder {
     private String mUrl = null;
     private static final Map<String, Object> PARAMS = RestCreator.getParams();
+
     private IRequest mIRequest = null;
     private ISuccess mISuccess = null;
     private IError mIError = null;
     private IFailure mIFailure = null;
+
     private RequestBody mBody = null;
     private File mfile;
     private Context mContext = null;
     private LoaderStyle mLoadStyle = null;
+
+    private String mDownloadDir = null;
+    private String mExtension = null;
+    private String mName = null;
 
     /**
      * 不允许外部类来用它
@@ -65,6 +72,21 @@ public class RestClientBuilder {
 
     public final RestClientBuilder file(String file) {
         this.mfile = new File(file);
+        return this;
+    }
+
+    public final RestClientBuilder name(String name) {
+        this.mName = name;
+        return this;
+    }
+
+    public final RestClientBuilder dir(String dir) {
+        this.mDownloadDir = dir;
+        return this;
+    }
+
+    public final RestClientBuilder extension(String extension) {
+        this.mExtension = extension;
         return this;
     }
 
@@ -115,6 +137,9 @@ public class RestClientBuilder {
      * @return
      */
     public final RestClient build() {
-        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIError, mIFailure, mBody, mfile, mContext, mLoadStyle);
+        return new RestClient(
+                mUrl, PARAMS, mDownloadDir, mExtension,
+                mName, mIRequest, mISuccess, mIError,
+                mIFailure, mBody, mfile, mContext, mLoadStyle);
     }
 }

@@ -52,6 +52,11 @@ public class ExampleDelegate extends LatteDelegate {
                         Toast.makeText(getContext(), "erro", Toast.LENGTH_LONG).show();
                     }
                 })
+                //.name()完整文件名或着下方两种
+                //.dir()
+                //.extension()
+                //.build()
+                //.download();最后download
                 .build()
                 .get();
     }

@@ -1,4 +1,4 @@
-package com.yuanli.latte.util;
+package com.yuanli.latte.util.dimen;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

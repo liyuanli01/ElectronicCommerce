@@ -51,6 +51,10 @@ public interface RestService {
     @DELETE
     Call<String> delete(@Url String url, @QueryMap Map<String, Object> params);
 
+    /**
+     * Streaming:一边下载一边写，需要使用异步的方式，否则会报异常
+     * 不用Streaming的话，有可能会内存溢出，因为会直接全部下载到内存
+     */
     @Streaming
     @GET
     Call<ResponseBody> download(@Url String url, @QueryMap Map<String, Object> params);

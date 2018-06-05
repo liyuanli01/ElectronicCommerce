@@ -7,6 +7,7 @@ import com.yuanli.latte.net.callBack.IFailure;
 import com.yuanli.latte.net.callBack.IRequest;
 import com.yuanli.latte.net.callBack.ISuccess;
 import com.yuanli.latte.net.callBack.RequestCallbacks;
+import com.yuanli.latte.net.download.DownLoadHandler;
 import com.yuanli.latte.ui.LatteLoader;
 import com.yuanli.latte.ui.LoaderStyle;
 
@@ -23,6 +24,7 @@ import retrofit2.Callback;
  * ElectronicCommerce
  * builder模式宿主
  * 考虑需要哪些参数？build模式创建
+ * 加入所需要的参数，在builer中也加入
  *
  * @author liyuanli
  * @data 2018/5/18
@@ -34,6 +36,9 @@ public class RestClient {
     private final String URL;
     private static final Map<String, Object> PARAMS = RestCreator.getParams();
     private final IRequest REQUEST;
+    private final String DOWNLOAD_DIR;
+    private final String EXTENSION;
+    private final String NAME;
     private final ISuccess SUCCESS;
     private final IError ERROR;
     private final IFailure FAILFURE;
@@ -44,6 +49,9 @@ public class RestClient {
 
     public RestClient(String url,
                       Map<String, Object> params,
+                      String downloadDir,
+                      String extension,
+                      String name,
                       IRequest request,
                       ISuccess success,
                       IError error,
@@ -54,6 +62,9 @@ public class RestClient {
                       LoaderStyle loaderStyle) {
         URL = url;
         PARAMS.putAll(params);
+        DOWNLOAD_DIR = downloadDir;
+        EXTENSION = extension;
+        NAME = name;
         REQUEST = request;
         SUCCESS = success;
         ERROR = error;
@@ -154,4 +165,17 @@ public class RestClient {
         request(HttpMethod.DELETE);
     }
 
+    public final void upload() {
+        request(HttpMethod.UPLOAD);
+    }
+
+    public final void download() {
+        new DownLoadHandler(
+                URL, REQUEST,
+                DOWNLOAD_DIR,
+                EXTENSION, NAME,
+                SUCCESS, ERROR,
+                FAILFURE)
+                .handleDownload();
+    }
 }
