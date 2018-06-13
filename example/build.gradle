@@ -35,4 +35,9 @@ dependencies {
 //    compile 'cn.jiguang.sdk:jcore:1.1.0'
 
 //    annotationProcessor project(':latte-compiler')
+
+    //查看数据库
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
 }

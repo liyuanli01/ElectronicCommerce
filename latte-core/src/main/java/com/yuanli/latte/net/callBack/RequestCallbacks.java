@@ -3,8 +3,8 @@ package com.yuanli.latte.net.callBack;
 
 import android.os.Handler;
 
-import com.yuanli.latte.ui.LatteLoader;
-import com.yuanli.latte.ui.LoaderStyle;
+import com.yuanli.latte.ui.loader.LatteLoader;
+import com.yuanli.latte.ui.loader.LoaderStyle;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -15,7 +15,7 @@ import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 
-import com.flj.latte.app.Latte;
+import com.yuanli.latte.app.Latte;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

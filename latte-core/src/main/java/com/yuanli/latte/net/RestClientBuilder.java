@@ -6,7 +6,7 @@ import com.yuanli.latte.net.callBack.IError;
 import com.yuanli.latte.net.callBack.IFailure;
 import com.yuanli.latte.net.callBack.IRequest;
 import com.yuanli.latte.net.callBack.ISuccess;
-import com.yuanli.latte.ui.LoaderStyle;
+import com.yuanli.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;

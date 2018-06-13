@@ -1,4 +1,4 @@
-package com.yuanli.latte.ui;
+package com.yuanli.latte.ui.loader;
 
 import android.content.Context;
 

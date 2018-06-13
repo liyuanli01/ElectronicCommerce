@@ -8,8 +8,8 @@ import com.yuanli.latte.net.callBack.IRequest;
 import com.yuanli.latte.net.callBack.ISuccess;
 import com.yuanli.latte.net.callBack.RequestCallbacks;
 import com.yuanli.latte.net.download.DownLoadHandler;
-import com.yuanli.latte.ui.LatteLoader;
-import com.yuanli.latte.ui.LoaderStyle;
+import com.yuanli.latte.ui.loader.LatteLoader;
+import com.yuanli.latte.ui.loader.LoaderStyle;
 
 import java.io.File;
 import java.util.Map;
