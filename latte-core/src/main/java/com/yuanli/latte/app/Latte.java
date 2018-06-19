@@ -23,7 +23,7 @@ public class Latte {
         return Configurator.getInstance();
     }
 
-    public static WeakHashMap<String,Object> getConfigutations(){
+    public static WeakHashMap<Object,Object> getConfigutations(){
         return Configurator.getInstance().getLatteConfigs();
     }
 
@@ -32,7 +32,7 @@ public class Latte {
     }
 
     public static <T> T getConfiguration(Object key) {
-        return getConfigurator().getConfiguration((Enum<ConfigType>) key);
+        return getConfigurator().getConfiguration(key);
     }
 
     public static Context getApplicationContext() {

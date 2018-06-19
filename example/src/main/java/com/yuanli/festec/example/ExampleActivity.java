@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
 import com.yuanli.latte.activitys.ProxyActivity;
+import com.yuanli.latte.app.Latte;
 import com.yuanli.latte.delegate.LatteDelegate;
 import com.yuanli.latte.ec.sign.ISignListener;
 import com.yuanli.latte.ec.sign.SignInDelegate;
@@ -22,6 +23,8 @@ public class ExampleActivity extends ProxyActivity implements ISignListener{
         if (actionBar != null) {
             actionBar.hide();
         }
+        //传入微信回调的activity
+        Latte.getConfigurator().withActivity(this);
     }
 
     @Override

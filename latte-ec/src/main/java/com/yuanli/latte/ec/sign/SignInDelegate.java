@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.joanzapata.iconify.widget.IconTextView;
 import com.yuanli.latte.delegate.LatteDelegate;
@@ -15,6 +16,8 @@ import com.yuanli.latte.ec.R2;
 import com.yuanli.latte.net.RestClient;
 import com.yuanli.latte.net.callBack.ISuccess;
 import com.yuanli.latte.util.log.LatteLogger;
+import com.yuanli.latte.wechat.LatteWeChat;
+import com.yuanli.latte.wechat.callbacks.IWeChatSignInCallback;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,6 +44,10 @@ public class SignInDelegate extends LatteDelegate {
 
     private ISignListener mSignListenner = null;
 
+    /**
+     * me.yokeyword.fragmentation.SupportActivity里的onAttach()方法
+     * @param activity
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -69,9 +76,16 @@ public class SignInDelegate extends LatteDelegate {
         }
     }
 
+
     @OnClick(R2.id.icon_sign_in_wechat)
     void onClickWeChat() {
-
+        LatteWeChat.getInstance().onSignSuccess(new IWeChatSignInCallback() {
+            @Override
+            public void onSignInSuccess(String userInfo) {
+                LatteLogger.json("WX_USER_PROFILE", userInfo.toString());
+                Toast.makeText(getContext(),userInfo,Toast.LENGTH_LONG).show();
+            }
+        }).signIn();
     }
 
     @OnClick(R2.id.tv_link_sign_up)

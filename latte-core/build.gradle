@@ -58,4 +58,7 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'
     //JSON依赖Android版
     compile 'com.alibaba:fastjson:1.1.68.android'
+    //微信依赖（包含统计）默认最高版本，加上注释让studio不要检查
+    //noinspection GradleDynamicVersion
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }

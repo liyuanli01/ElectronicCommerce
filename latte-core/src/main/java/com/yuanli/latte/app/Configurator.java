@@ -1,5 +1,7 @@
 package com.yuanli.latte.app;
 
+import android.app.Activity;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -19,12 +21,10 @@ import java.util.WeakHashMap;
 public class Configurator {
 
     // 这种存储的数据结构，在不使用的时候进行回收而且非常即时
-    private static final WeakHashMap<String, Object> LATTE_CONFIGS = new WeakHashMap<>();
-
-    final WeakHashMap<String, Object> getLatteConfigs() {
+    private static final WeakHashMap<Object, Object> LATTE_CONFIGS = new WeakHashMap<>();
+    final WeakHashMap<Object, Object> getLatteConfigs() {
         return LATTE_CONFIGS;
     }
-
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
 
     /**
@@ -32,7 +32,7 @@ public class Configurator {
      * .name()：枚举类的一个方法，以字符串String的形式输出
      */
     private Configurator() {
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
+        LATTE_CONFIGS.put(ConfigType.CONFIG_READY, false);
     }
 
     /**
@@ -56,12 +56,12 @@ public class Configurator {
     public final void configure() {
         initIcons();
         Logger.addLogAdapter(new AndroidLogAdapter());
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
+        LATTE_CONFIGS.put(ConfigType.CONFIG_READY, true);
     }
 
 
     public final Configurator withApiHost(String host) {
-        LATTE_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        LATTE_CONFIGS.put(ConfigType.API_HOST, host);
         return this;
     }
 
@@ -71,10 +71,10 @@ public class Configurator {
      * 例：final
      */
     private void checkConfiguration() {
-        final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigType.CONFIG_READY.name());
+        final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigType.CONFIG_READY);
         if (!isReady) {
             //没有配置完成时跑出一个运行时异常
-            throw new RuntimeException("Configuration is not ready,call configurw");
+            throw new RuntimeException("Configuration is not ready,call configure");
         }
     }
 
@@ -86,9 +86,13 @@ public class Configurator {
      * @return
      */
     @SuppressWarnings("unchecked")
-    final <T> T getConfiguration(Enum<ConfigType> key) {
+    final <T> T getConfiguration(Object key) {
         checkConfiguration();
-        return (T) LATTE_CONFIGS.get(key.name());
+        final Object value =LATTE_CONFIGS.get(key);
+        if (value==null){
+            throw new NullPointerException(key.toString()+" IS NULL");
+        }
+        return (T) LATTE_CONFIGS.get(key);
     }
 
     private void initIcons() {
@@ -102,6 +106,26 @@ public class Configurator {
 
     public final Configurator withIcon(IconFontDescriptor descriptor) {
         ICONS.add(descriptor);
+        return this;
+    }
+
+    public final Configurator withWeChatAppId(String appId) {
+        LATTE_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID, appId);
+        return this;
+    }
+
+    public final Configurator withWeChatAppSecret(String appSecret) {
+        LATTE_CONFIGS.put(ConfigKeys.WE_CHAT_APP_SECRET, appSecret);
+        return this;
+    }
+
+    /**
+     * 微信回调时候用
+     * @param activity
+     * @return
+     */
+    public final Configurator withActivity(Activity activity) {
+        LATTE_CONFIGS.put(ConfigKeys.ACTIVITY, activity);
         return this;
     }
 
