@@ -8,4 +8,7 @@ package com.yuanli.latte.delegate;
  */
 
 public abstract class LatteDelegate extends PermissionCheckerDelegate{
+
+
+
 }

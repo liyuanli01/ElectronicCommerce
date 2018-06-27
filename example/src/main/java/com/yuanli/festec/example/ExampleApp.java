@@ -28,6 +28,7 @@ public class ExampleApp extends Application {
                 .withWeChatAppId("wx1cde1971164ae0a6")
                 .withWeChatAppSecret("dfc4d6157daa2620f8faac76fc4b0fb1")
                 .configure();
+
         initStetho();
         DatabaseManager.getInstance().init(this);
     }

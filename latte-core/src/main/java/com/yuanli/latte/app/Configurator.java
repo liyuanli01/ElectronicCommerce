@@ -2,13 +2,15 @@ package com.yuanli.latte.app;
 
 import android.app.Activity;
 
+import com.blankj.utilcode.util.Utils;
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
-import java.util.WeakHashMap;
+import java.util.HashMap;
+
 
 /**
  * ElectronicCommerce
@@ -21,10 +23,12 @@ import java.util.WeakHashMap;
 public class Configurator {
 
     // 这种存储的数据结构，在不使用的时候进行回收而且非常即时
-    private static final WeakHashMap<Object, Object> LATTE_CONFIGS = new WeakHashMap<>();
-    final WeakHashMap<Object, Object> getLatteConfigs() {
+    private static final HashMap<Object, Object> LATTE_CONFIGS = new HashMap<>();
+
+    final HashMap<Object, Object> getLatteConfigs() {
         return LATTE_CONFIGS;
     }
+
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
 
     /**
@@ -32,7 +36,7 @@ public class Configurator {
      * .name()：枚举类的一个方法，以字符串String的形式输出
      */
     private Configurator() {
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY, false);
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, false);
     }
 
     /**
@@ -56,12 +60,13 @@ public class Configurator {
     public final void configure() {
         initIcons();
         Logger.addLogAdapter(new AndroidLogAdapter());
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY, true);
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
+        Utils.init(Latte.getApplicationContext());
     }
 
 
     public final Configurator withApiHost(String host) {
-        LATTE_CONFIGS.put(ConfigType.API_HOST, host);
+        LATTE_CONFIGS.put(ConfigKeys.API_HOST, host);
         return this;
     }
 
@@ -71,7 +76,7 @@ public class Configurator {
      * 例：final
      */
     private void checkConfiguration() {
-        final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigType.CONFIG_READY);
+        final boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigKeys.CONFIG_READY);
         if (!isReady) {
             //没有配置完成时跑出一个运行时异常
             throw new RuntimeException("Configuration is not ready,call configure");
@@ -88,9 +93,9 @@ public class Configurator {
     @SuppressWarnings("unchecked")
     final <T> T getConfiguration(Object key) {
         checkConfiguration();
-        final Object value =LATTE_CONFIGS.get(key);
-        if (value==null){
-            throw new NullPointerException(key.toString()+" IS NULL");
+        final Object value = LATTE_CONFIGS.get(key);
+        if (value == null) {
+            throw new NullPointerException(key.toString() + " IS NULL");
         }
         return (T) LATTE_CONFIGS.get(key);
     }
@@ -121,6 +126,7 @@ public class Configurator {
 
     /**
      * 微信回调时候用
+     *
      * @param activity
      * @return
      */

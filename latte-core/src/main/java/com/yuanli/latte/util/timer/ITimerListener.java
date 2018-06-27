@@ -8,4 +8,5 @@ package com.yuanli.latte.util.timer;
  */
 
 public interface ITimerListener {
+    void onTimer();
 }
